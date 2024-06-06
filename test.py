@@ -2,7 +2,7 @@ import re
 
 # 读取字典文件，用于非单词错误检测
 with open('vocab.txt', 'r', encoding='utf-8') as vocab_file:
-    vocab = [word.lower() for word in (line.strip() for line in vocab_file)]
+    vocab = {word.lower() for word in (line.strip() for line in vocab_file)}
 
 def correct_spelling(sentence):
     words = re.findall(r'\b[\w\']+|[-.,、]|[\s]|[.,;!?]', sentence)
@@ -46,12 +46,12 @@ def edits2(word):
 with open('testdata.txt', 'r', encoding='utf-8') as testdata_file:
     lines = testdata_file.readlines()
 
-count =0
+count = 0
 # 拼写校正并写入结果文件
 with open('result.txt', 'w', encoding='utf-8') as result_file:
     for line in lines:
-        count+=1
-        if count%10==0:
+        count += 1
+        if count % 10 == 0:
             print(count)
         parts = line.strip().split('\t')
         sentence_id, _, sentence = parts
